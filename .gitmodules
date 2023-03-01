@@ -1,0 +1,3 @@
+[submodule "bup-script"]
+	path = bup-script
+	url = git@github.com:SidhBhat/bup-script.git
