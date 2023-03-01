@@ -49,17 +49,18 @@ else
 	[[ -b "$dev" ]] || { echo "uuid=\"$uuid\" is not assosiated with any block device" 1>&2 ; exit 1; };
 fi
 
-[ -f "/home/$user/.local/bin/bup-run.sh" ] || { echo "bup-run.sh not found" 1>&2; exit 1; } &&
-[ -x "/home/$user/.local/bin/bup-run.sh" ] || { echo "bup-run.sh not executable" 1>&2; exit 1; };
+bup_run_exec="$(which bup-run.sh)";
+which bup-run.sh || { echo "bup-run.sh not found" 1>&2; exit 1; } &&
+[ -x "$bup_run_exec" ] || { echo "bup-run.sh not executable" 1>&2; exit 1; };
 
 if [[ "$status_report" == "true" ]]; then
-	env DISPLAY=":0" "/home/$user/.local/bin/bup-run.sh" --directory="/home/$user" \
+	env DISPLAY=":0" "$bup_run_exec" --directory="/home/$user" \
 		--target-dir="$dir" --mountpoint="$mountpoint" --unmount \
 		--prompt gui  --report="$user" "$dev" 2>/tmp/backup-script-error.log
 	code=$?
 	chmod a+r /tmp/backup-script-error.log
 else
-	"/home/$user/.local/bin/bup-run.sh" --directory="/home/$user" \
+	"$bup_run_exec" --directory="/home/$user" \
         	--target-dir="$dir" --mountpoint="$mountpoint" --unmount \
         	--prompt cli  "$dev"
 	code=$?
