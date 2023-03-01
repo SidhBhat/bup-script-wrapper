@@ -53,9 +53,15 @@ fi
 if [ $code -ne 0 ]; then
 	echo "non zero exit code : $code" 1>&2;
 	if [ "$gui" == "true" ]; then
-		sudo -nu "$user" env DISPLAY=":0" XDG_RUNTIME_DIR="/run/user/$(id -u "$user")" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch \
+		if [ $code -eq 132 ]; then
+			sudo -nu "$user" env DISPLAY=":0" XDG_RUNTIME_DIR="/run/user/$(id -u "$user")" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch \
+			kdialog --title "Backup Script" --msgbox \
+			"You canceled the backup" & \
+		else
+			sudo -nu "$user" env DISPLAY=":0" XDG_RUNTIME_DIR="/run/user/$(id -u "$user")" KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dbus-launch \
 			kdialog --title "Backup Script" --sorry \
 			"Script returned with non zero exit status $code\nPlease check \"/tmp/backup-script-error.log\" for details." &
+		fi
 	fi
 else
 	if [ "$gui" == "true" ]; then
