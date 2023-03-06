@@ -1,7 +1,8 @@
 # bup-script-wrapper
 
 This is a wrapper script for [bup-script](https://github.com/SidhBhat/bup-script), I use to backup
-my home directory on a daily basis. These are the scripts I call from [crontab](https://en.wikipedia.org/wiki/Cron)
+my home directory to another partition on a daily basis. These are the scripts I call from
+[crontab](https://en.wikipedia.org/wiki/Cron).
 
 ## Installation
 
@@ -15,6 +16,9 @@ curl -sL https://raw.githubusercontent.com/SidhBhat/bup-script-wrapper/main/back
 ## Using The Wrapper Scripts
 
 To use these scripts you have to venture inside the files and set the variables as instruted by the comments.
+
+Note: This script backs up your home directory to another partition only. You cannot use it to backup to a
+simple folder.
 
 ## Note for the developer
 
